@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import UserInput from "./components/UserInput";
+import UserList from "./components/UserList";
+import "./index.css";
+const userDb = [
+  {
+    name: "John",
+    age: 30,
+    id: Math.random(),
+  },
+];
 
 function App() {
+
+  const [data, setData] = useState(userDb);
+
+  const updateData = (data) => {
+    setData((prevData)=>{
+      return [...prevData, data];
+    });
+    userDb.push(data);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <UserInput sendDataUpwards={updateData} />
+      <UserList data={userDb} />
     </div>
   );
 }
